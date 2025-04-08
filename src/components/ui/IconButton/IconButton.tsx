@@ -1,13 +1,26 @@
-import { cc } from 'utils/combineClasses'
-import styles from './styles.module.scss'
+import React from 'react';
+import styles from './IconButton.module.scss';
 
-interface Props {
-  className?: string
-}
+export type IconButtonProps = {
+  icon: React.ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+  className?: string;
+};
 
-const IconButton = ({ className }: Props) => {
-  return <div className={cc(styles.iconButtonRoot, className)}>IconButton component</div>
-}
-
-
-export default IconButton
+export const IconButton: React.FC<IconButtonProps> = ({
+  icon,
+  disabled = false,
+  onClick,
+  className = '',
+}) => {
+  return (
+    <button
+      className={`${styles.iconButton} ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {icon}
+    </button>
+  );
+};

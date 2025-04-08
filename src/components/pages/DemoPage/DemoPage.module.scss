@@ -1,0 +1,77 @@
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.searchBox {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+}
+
+.buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+}
+
+.dropdowns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+}
+
+.checkboxes {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.notFound {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 20px;
+    width: 100%;
+}

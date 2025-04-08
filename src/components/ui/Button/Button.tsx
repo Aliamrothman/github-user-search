@@ -1,15 +1,35 @@
-import { cc } from 'utils/combineClasses'
-import styles from './styles.module.scss'
 import React from 'react';
+import styles from './Button.module.scss';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = {
   children: React.ReactNode;
   loading?: boolean;
-}
+  disabled?: boolean;
+  onClick?: () => void;
+  className?: string;
+};
 
-const Button = ({ className }: Props) => {
-  return <div className={cc(styles.buttonRoot, className)}>Button component</div>
-}
-
-
-export default Button
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  loading = false,
+  disabled = false,
+  onClick,
+  className = '',
+}) => {
+  return (
+    <button
+      className={`${styles.button} ${loading ? styles.loading : ''} ${className}`}
+      onClick={onClick}
+      disabled={disabled || loading}
+    >
+      {loading ? (
+        <>
+          <span className={styles.spinner} />
+          {children}
+        </>
+      ) : (
+        children
+      )}
+    </button>
+  );
+};

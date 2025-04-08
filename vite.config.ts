@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,22 +11,16 @@ export default defineConfig({
   plugins: [svgr(), react()],
   server: {
     host: true,
-    port: 5173
+    port: 5173,
+    open: true
   },
   resolve: {
-    alias: [
-      { find: 'src', replacement: `${__dirname}/src` },
-      { find: 'api', replacement: `${__dirname}/src/api` },
-      { find: 'app', replacement: `${__dirname}/src/app` },
-      { find: 'assets', replacement: `${__dirname}/src/assets` },
-      { find: 'config', replacement: `${__dirname}/src/config` },
-      { find: 'constants', replacement: `${__dirname}/src/constants` },
-      { find: 'hooks', replacement: `${__dirname}/src/hooks` },
-      { find: 'models', replacement: `${__dirname}/src/models` },
-      { find: 'stores', replacement: `${__dirname}/src/stores` },
-      { find: 'styles', replacement: `${__dirname}/src/styles` },
-      { find: 'components', replacement: `${__dirname}/src/components` },
-      { find: 'utils', replacement: `${__dirname}/src/utils` }
-    ]
+    alias: {
+      'app': path.resolve(__dirname, './src/app'),
+      'components': path.resolve(__dirname, './src/components'),
+      'constants': path.resolve(__dirname, './src/constants'),
+      'styles': path.resolve(__dirname, './src/styles'),
+      'utils': path.resolve(__dirname, './src/utils'),
+    }
   }
 })
