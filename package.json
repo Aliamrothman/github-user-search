@@ -17,7 +17,9 @@
     "check:typescript": "tsc",
     "generate-scss-types": "typed-scss-modules src/**/*.module.scss --aliasPrefixes.styles src/styles --nameFormat dashes",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.10",
