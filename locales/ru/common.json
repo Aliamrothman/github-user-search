@@ -4,5 +4,9 @@
         "companyTitle": "Должность",
         "companyName": "Название компании",
         "age": "Возраст"
+    },
+    "pathnames": {
+        "main": "Главная",
+        "notFound": "Страница не найдена"
     }
 }
