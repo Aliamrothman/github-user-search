@@ -1,34 +1,28 @@
-interface GitHubUser {
-    login: string;
-    avatar_url: string;
-    public_repos: number;
+export interface GitHubRepo {
+    id: number;
+    name: string;
+    owner: { login: string; avatar_url: string };
+    stargazers_count: number;
     updated_at: string;
+    language: string;
 }
 
-export async function searchGitHubUsers(query: string): Promise<GitHubUser[]> {
-    if (!query) return [];
-
+export async function searchOrganizationRepos(org: string): Promise<GitHubRepo[]> {
+    if (!org) return [];
     try {
-        const response = await fetch(`https://api.github.com/search/users?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`https://api.github.com/orgs/${encodeURIComponent(org)}/repos`);
+        if (!response.ok) return [];
         const data = await response.json();
-
-        // Get detailed information for each user
-        const detailedUsers = await Promise.all(
-            data.items.slice(0, 8).map(async (user: any) => {
-                const userResponse = await fetch(`https://api.github.com/users/${user.login}`);
-                const userData = await userResponse.json();
-                return {
-                    login: userData.login,
-                    avatar_url: userData.avatar_url,
-                    public_repos: userData.public_repos,
-                    updated_at: userData.updated_at
-                };
-            })
-        );
-
-        return detailedUsers;
+        return data.map((repo: any) => ({
+            id: repo.id,
+            name: repo.name,
+            owner: repo.owner,
+            stargazers_count: repo.stargazers_count,
+            updated_at: repo.updated_at,
+            language: repo.language,
+        }));
     } catch (error) {
-        console.error('Error searching GitHub users:', error);
+        console.error('Error searching organization repos:', error);
         return [];
     }
 } 

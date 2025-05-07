@@ -1,0 +1,8 @@
+export declare const avatar: string
+export declare const card: string
+export declare const info: string
+export declare const name: string
+export declare const placeholder: string
+export declare const stars: string
+export declare const stats: string
+export declare const userName: string

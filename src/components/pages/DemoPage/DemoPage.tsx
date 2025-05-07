@@ -3,21 +3,19 @@ import { Card } from '../../dummies/Card/Card';
 import { Input } from '../../ui/Input/Input';
 import { IconButton } from '../../ui/IconButton/IconButton';
 import styles from './DemoPage.module.scss';
-import { searchGitHubUsers } from '../../../services/github';
+import { searchOrganizationRepos, GitHubRepo } from '../../../services/github';
 import { format } from 'date-fns';
-
-interface GitHubUser {
-    login: string;
-    avatar_url: string;
-    public_repos: number;
-    updated_at: string;
-}
+import { useNavigate } from '@tanstack/react-router';
+import { Select } from 'antd';
 
 export const DemoPage: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [users, setUsers] = useState<GitHubUser[]>([]);
+    const [repos, setRepos] = useState<GitHubRepo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState('all');
+    const [languages, setLanguages] = useState<string[]>(['all']);
+    const navigate = useNavigate();
 
     const handleSearch = useCallback(async () => {
         if (!searchQuery.trim()) return;
@@ -25,11 +23,16 @@ export const DemoPage: React.FC = () => {
         setIsLoading(true);
         setHasSearched(true);
         try {
-            const results = await searchGitHubUsers(searchQuery);
-            setUsers(results);
+            const results = await searchOrganizationRepos(searchQuery);
+            setRepos(results);
+            const uniqueLanguages = Array.from(new Set(results.map(r => r.language).filter(Boolean)));
+            setLanguages(['all', ...uniqueLanguages]);
+            setSelectedLanguage('all');
         } catch (error) {
-            console.error('Error fetching users:', error);
-            setUsers([]);
+            console.error('Error fetching repos:', error);
+            setRepos([]);
+            setLanguages(['all']);
+            setSelectedLanguage('all');
         } finally {
             setIsLoading(false);
         }
@@ -41,8 +44,11 @@ export const DemoPage: React.FC = () => {
         }
     };
 
-    const openGitHubProfile = (username: string) => {
-        window.open(`https://github.com/${username}`, '_blank');
+    const handleRepoClick = (repo: GitHubRepo) => {
+        navigate({
+            to: '/org/$org/repo/$repo',
+            params: { org: repo.owner.login, repo: repo.name }
+        });
     };
 
     const formatDate = (dateString: string) => {
@@ -52,6 +58,9 @@ export const DemoPage: React.FC = () => {
             return 'Unknown date';
         }
     };
+
+    // فلترة الريبو حسب اللغة
+    const filteredRepos = selectedLanguage === 'all' ? repos : repos.filter(r => r.language === selectedLanguage);
 
     return (
         <div className={styles.container}>
@@ -80,19 +89,39 @@ export const DemoPage: React.FC = () => {
                 />
             </div>
 
+            {/* فلتر اللغة مع العنوان */}
+            {repos.length > 0 && (
+                <div style={{ marginBottom: 20, display: 'flex', alignItems: 'center', gap: 18 }}>
+                    <h2 style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#222' }}>Repositories</h2>
+                    <Select
+                        value={selectedLanguage}
+                        onChange={setSelectedLanguage}
+                        style={{ minWidth: 180, height: 48, borderRadius: 12 }}
+                        dropdownStyle={{ borderRadius: 12 }}
+                        className={styles.languageSelect}
+                    >
+                        {languages.map(lang => (
+                            <Select.Option key={lang} value={lang}>
+                                {lang === 'all' ? 'Languages' : lang}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                </div>
+            )}
+
             <div className={styles.results}>
-                {hasSearched && !isLoading && users.length === 0 && (
+                {hasSearched && !isLoading && filteredRepos.length === 0 && (
                     <div className={styles.notFound}>Not Found</div>
                 )}
-                {users.map((user) => (
+                {filteredRepos.map((repo) => (
                     <Card
-                        key={user.login}
-                        avatar={user.avatar_url || user.login[0].toUpperCase()}
-                        name={user.login}
-                        userName={user.login}
-                        stars={user.public_repos}
-                        updatedAt={formatDate(user.updated_at)}
-                        onClick={() => openGitHubProfile(user.login)}
+                        key={repo.id}
+                        avatar={repo.owner.avatar_url || repo.name[0].toUpperCase()}
+                        name={repo.name}
+                        userName={repo.owner.login}
+                        stars={repo.stargazers_count}
+                        updatedAt={formatDate(repo.updated_at)}
+                        onClick={() => handleRepoClick(repo)}
                     />
                 ))}
             </div>

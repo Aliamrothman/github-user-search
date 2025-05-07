@@ -1,0 +1,229 @@
+body {
+    background: #fff !important;
+}
+
+.search-page {
+    padding: 32px 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.search-bar-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.search-input-custom {
+    flex: 1;
+    height: 48px;
+    border-radius: 16px;
+    font-size: 18px;
+    border: 1.5px solid #e8e8e8;
+    background: #fff;
+    box-shadow: none;
+}
+
+.search-btn-custom {
+    background: #ff5c5c;
+    border: none;
+    border-radius: 16px;
+    width: 56px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    transition: background 0.2s;
+}
+
+.search-btn-custom:hover,
+.search-btn-custom:focus {
+    background: #ff7875;
+}
+
+.repos-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.repos-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #222;
+}
+
+.languages-card {
+    border-radius: 12px !important;
+    border: 1.5px solid #e8e8e8 !important;
+    box-shadow: none !important;
+    min-width: 180px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    background: #fff !important;
+}
+
+.languages-select {
+    width: 100%;
+    font-size: 16px;
+    background: transparent !important;
+    color: #888 !important;
+}
+
+.languages-select .ant-select-selector {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 56px !important;
+    display: flex;
+    align-items: center;
+}
+
+.languages-dropdown .ant-select-item {
+    font-size: 16px;
+}
+
+.languages-dropdown {
+    border-radius: 12px !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+    border: 1.5px solid #e8e8e8 !important;
+    background: #fff !important;
+    padding: 0 !important;
+}
+
+.repos-list-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.repo-card-custom {
+    border-radius: 16px !important;
+    border: 1.5px solid #e8e8e8 !important;
+    box-shadow: none !important;
+    transition: border 0.2s;
+    margin-bottom: 0;
+    background: #fff !important;
+}
+
+.repo-card-custom:hover {
+    border-color: #ffa940 !important;
+}
+
+.repo-card-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.repo-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ff5c5c;
+    display: block;
+}
+
+.repo-avatar-fallback {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ff5c5c;
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.repo-main-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.repo-name-custom {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.repo-owner-custom {
+    color: #888;
+    font-size: 1rem;
+}
+
+.repo-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 6px;
+}
+
+.repo-stars-custom {
+    color: #ffa940;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.repo-updated-custom {
+    color: #888;
+    font-size: 1rem;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+@media (max-width: 600px) {
+    .search-page {
+        padding: 12px 2px;
+    }
+
+    .search-bar-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .repos-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .languages-card {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .repos-title {
+        font-size: 1.3rem;
+    }
+
+    .repo-card-content {
+        gap: 10px;
+    }
+
+    .repo-avatar-large,
+    .repo-avatar-fallback {
+        width: 56px;
+        height: 56px;
+        font-size: 2rem;
+    }
+}
